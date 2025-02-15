@@ -11,7 +11,7 @@ def extract_text_from_epub(epub_path):
     book = epub.read_epub(epub_path)
     texts = []
     # Iterate over each document in the EPUB
-    for item in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
+    for item in book.get_items_of_type(epub.ITEM_DOCUMENT):
         # Get the content and parse it with BeautifulSoup
         soup = BeautifulSoup(item.get_content(), 'html.parser')
         
