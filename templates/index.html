@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>EPUB to PDF Converter</title>
+  <style>
+    /* Simple styling for the drag and drop area */
+    .drop-area {
+      border: 2px dashed #ccc;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 500px;
+      margin: auto;
+      padding: 50px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      color: #ccc;
+      cursor: pointer;
+    }
+    .drop-area.hover {
+      border-color: #333;
+      color: #333;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f7f7f7;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <h1>EPUB to PDF Converter</h1>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul style="color:red;">
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+      <div class="drop-area" id="drop-area">
+        <p>Drag and drop your EPUB file here or click to select file</p>
+        <input type="file" id="epub_input" name="epub_file" accept=".epub" style="display:none;">
+      </div>
+      <br>
+      <button type="submit">Convert to PDF</button>
+    </form>
+  </div>
+  <script>
+    // Set up drag and drop functionality
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('epub_input');
+
+    dropArea.addEventListener('click', () => {
+      fileInput.click();
+    });
+
+    dropArea.addEventListener('dragover', (event) => {
+      event.preventDefault();
+      dropArea.classList.add('hover');
+    });
+
+    dropArea.addEventListener('dragleave', (event) => {
+      dropArea.classList.remove('hover');
+    });
+
+    dropArea.addEventListener('drop', (event) => {
+      event.preventDefault();
+      dropArea.classList.remove('hover');
+      if (event.dataTransfer.files.length > 0) {
+        fileInput.files = event.dataTransfer.files;
+      }
+    });
+  </script>
+</body>
+</html> 
